@@ -82,10 +82,21 @@ const inner_plate_svg = () => {
 
 
 
-fs.writeFileSync('octave.svg', `<svg width="160mm" height="160mm" viewBox="-80 -80 160 160" version="1.1" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">`+
+fs.writeFileSync('octave.svg', `<svg width="160mm" height="160mm" viewBox="-80 -80 160 160" version="1.1" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><defs>
+    <radialGradient id="shinyGold" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:#ffd700; stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8d7802; stop-opacity:1" />
+    </radialGradient>
+    <filter id="glossy">
+      <feSpecularLighting result="specOut" specularExponent="30" lighting-color="#ffffff">
+        <fePointLight x="-5000" y="-10000" z="20000" />
+      </feSpecularLighting>
+      <feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
+    </filter>
+  </defs>`+
   outer_plate_svg()
   + inner_plate_svg()
-  + `</svg>
+  + `<circle cx="0" cy="0" r="3.3" stroke="#8d7802" stroke-width="1" fill="url(#shinyGold)" filter="url(#glossy)" id="center_eyelet" /></svg>
 `, { encoding: 'utf-8' });
 
 function freqToAngle(freq) { return Math.log2(freq / 440) * 360; }
