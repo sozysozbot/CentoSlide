@@ -95,7 +95,7 @@ function text({ content, angle, radius, size = 4 }) {
      xml:space="preserve"
      style="font-size:${size}px;line-height:1.2;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-decoration-color:#000000;text-anchor:middle;white-space:pre;fill:#000000;stroke:none;"
      x="0"
-     y="-54"
+     y="${-radius}"
      id="text1" transform="rotate(${angle})"><tspan
        sodipodi:role="line"
        id="tspan1"
