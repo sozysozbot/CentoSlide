@@ -82,8 +82,7 @@ const inner_plate_svg = () => {
 
 
 
-fs.writeFileSync('gen.svg', `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg version="1.1" viewBox="-80 -80 160 160">`+
+fs.writeFileSync('octave.svg', `<svg width="160mm" height="160mm" viewBox="-80 -80 160 160" version="1.1" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">`+
   outer_plate_svg()
   + inner_plate_svg()
   + `</svg>
