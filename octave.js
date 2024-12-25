@@ -76,7 +76,7 @@ const inner_plate_svg = () => {
         'D♯/E♭', 'E', 'F', 'F♯/G♭', 'G', 'G♯/A♭'
       ][i]
     })).join('')
-    + notch_on_window_top_edge_pointing_up(2, 0)
+    + notch_on_window_top_edge_pointing_out(2, 0)
     + `</g>`;
 }
 
@@ -127,34 +127,25 @@ function text_on_window_top_edge(content, angle) {
   return text({ content, angle, radius: 32, size: 3 });
 }
 
-function notch_on_inner_plate(length, angle) {
+function notch({ radius, length, angle, is_pointing_inward }) {
   return `<path
-     style="fill:#ffffff;fill-opacity:0.5;stroke:#000000;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none" transform="rotate(${angle})"
-     d="m 0,-60 v ${length}"
-     id="path2"
-     sodipodi:nodetypes="cc" />`;
+     style="fill:#ffffff;fill-opacity:0.5;stroke:#000000;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
+     d="m 0,${-radius} v ${is_pointing_inward ? length : -length}"
+     sodipodi:nodetypes="cc" transform="rotate(${angle})" />`;
+}
+
+function notch_on_inner_plate(length, angle) {
+  return notch({ radius: 60, length, angle, is_pointing_inward: true });
 }
 
 function notch_on_window_top_edge(length, angle) {
-  return `<path
-     style="fill:#ffffff;fill-opacity:0.5;stroke:#000000;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none" transform="rotate(${angle})"
-     d="m 0,-${WINDOW_RADIUS.top_edge} v ${length}"
-     id="path2"
-     sodipodi:nodetypes="cc" />`;
+  return notch({ radius: WINDOW_RADIUS.top_edge, length, angle, is_pointing_inward: true });
 }
 
-function notch_on_window_top_edge_pointing_up(length, angle) {
-  return `<path
-     style="fill:#ffffff;fill-opacity:0.5;stroke:#000000;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none" transform="rotate(${angle})"
-     d="m 0,-${WINDOW_RADIUS.top_edge} v ${-length}"
-     id="path2"
-     sodipodi:nodetypes="cc" />`;
+function notch_on_window_top_edge_pointing_out(length, angle) {
+  return notch({ radius: WINDOW_RADIUS.top_edge, length, angle, is_pointing_inward: false });
 }
 
 function notch_on_outer_plate(length, angle) {
-  return `<path
-     style="fill:#ffffff;fill-opacity:0.5;stroke:#000000;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none" transform="rotate(${angle})"
-     d="m 0,-60 v ${-length}"
-     id="path2"
-     sodipodi:nodetypes="cc" />`;
+  return notch({ radius: 60, length, angle, is_pointing_inward: false });
 }
