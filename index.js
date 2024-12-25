@@ -32,29 +32,38 @@ const NOTCHES = [
   { delta: 9.5, length: 1.4 },
 ];
 
-const outer_circle_svg = `<g id="outer"><circle cx="0" cy="0" r="74" stroke="black" stroke-width=".25" fill="white" id="circle2" style="fill:#ffffff;" />`
+const outer_circle_svg = `<g id="outer"><circle cx="0" cy="0" r="74" stroke="black" stroke-width=".25" fill="white" id="circle2" style="fill:#eee;" />`
   + FREQS_BY_10.flatMap(
     (freq) => NOTCHES.map(o => notch_on_outer_circle(o.length, freqToAngle(freq + o.delta)))
   ).join('')
   + FREQS_BY_10.map((freq) => text_on_outer_circle(freq, freqToAngle(freq))).join('') + `</g>`;
 
-const inner_circle_svg = `<g id="inner"><circle cx="0" cy="0" r="60" stroke="black" stroke-width=".25" fill="white" id="circle1" style="fill:#ffffff;" />`
-  + FREQS_BY_10.flatMap(
-    (freq) => NOTCHES.map(o => notch_on_inner_circle(o.length, freqToAngle(freq + o.delta)))
-  ).join('')
-  + FREQS_BY_10.map((freq) => text_on_inner_circle(freq, freqToAngle(freq))).join('')
-  + Array.from({ length: 12 }, (_, i) => text({
-    radius: 45, angle: i * 30, content: [
-      'A', 'A♯/B♭', 'B', 'C', 'C♯/D♭', 'D',
-      'D♯/E♭', 'E', 'F', 'F♯/G♭', 'G', 'G♯/A♭'
-    ][i]
-  })).join('')
-  + `</g>`;
+
+const inner_circle_svg = () => {
+
+  const o = { exterior: 39, interior: 26 };
+  const window = `M 0,-${o.interior} L 0,-${o.exterior} A ${o.exterior} ${o.exterior} 0 0 0 -${o.exterior * Math.SQRT1_2},-${o.exterior * Math.SQRT1_2} L -${o.interior * Math.SQRT1_2},-${o.interior * Math.SQRT1_2} A ${o.interior} ${o.interior} 0 0 1 0,-${o.interior}`;
+
+  return `<g id="inner"><path fill="white" fill-rule="evenodd" d="M 0,-60 A 60 60 0 0 1 0,60 A 60 60 0 0 1 0,-60 ${window}" transform="rotate(22.5)" />`
+    + FREQS_BY_10.flatMap(
+      (freq) => NOTCHES.map(o => notch_on_inner_circle(o.length, freqToAngle(freq + o.delta)))
+    ).join('')
+    + FREQS_BY_10.map((freq) => text_on_inner_circle(freq, freqToAngle(freq))).join('')
+    + Array.from({ length: 12 }, (_, i) => text({
+      radius: 45, angle: i * 30, content: [
+        'A', 'A♯/B♭', 'B', 'C', 'C♯/D♭', 'D',
+        'D♯/E♭', 'E', 'F', 'F♯/G♭', 'G', 'G♯/A♭'
+      ][i]
+    })).join('')
+    + `</g>`;
+}
+
+
 
 fs.writeFileSync('gen.svg', `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg version="1.1" viewBox="-80 -80 160 160">`+
   outer_circle_svg
-  + inner_circle_svg
+  + inner_circle_svg()
   + `</svg>
 `, { encoding: 'utf-8' });
 
