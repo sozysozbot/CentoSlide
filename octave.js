@@ -44,17 +44,20 @@ const getNotchCentLength = (delta) => {
   }
 }
 
+function g(id, svg) { return `<g id="${id}">${svg}</g>` }
+
 const outer_plate_svg = () => {
-  return `<g id="outer"><circle cx="0" cy="0" r="74" stroke="black" stroke-width=".25" fill="white" id="circle2" style="fill:#eee;" />`
-    + FREQS_BY_10.flatMap(
+  return `<g id="outer_plate"><circle cx="0" cy="0" r="74" stroke="black" stroke-width=".25" fill="white" id="circle2" style="fill:#eee;" />`
+    + g("outer_plate_freq_notches", FREQS_BY_10.flatMap(
       (freq) => NOTCHES_FREQ.map(o => notch_on_outer_plate(o.length, freqToAngle(freq + o.delta)))
-    ).join('')
-    + FREQS_BY_10.map((freq) => text_on_outer_plate(freq, freqToAngle(freq))).join('')
-    + Array.from({ length: 600 }).map((_, i) => notch_on_window_top_edge(getNotchCentLength(i * 2), (i * 2) * 360 / 1200)).join('')
-    + text_on_window_top_edge('±0¢', 0)
-    + text_on_window_top_edge('±600¢', 180)
-    + Array.from({ length: 11 }, (_, i) => text_on_window_top_edge(`+${(i + 1) * 50}¢`, (i + 1) * 15)).join('')
-    + Array.from({ length: 11 }, (_, i) => text_on_window_top_edge(`&#x2212;${(i + 1) * 50}¢`, -(i + 1) * 15)).join('')
+    ).join(''))
+    + g("outer_plate_freq_texts", FREQS_BY_10.map((freq) => text_on_outer_plate(freq, freqToAngle(freq))).join(''))
+    + g("outer_plate_cent_notches", Array.from({ length: 600 }).map((_, i) => notch_on_window_top_edge(getNotchCentLength(i * 2), (i * 2) * 360 / 1200)).join(''))
+    + g("outer_plate_cent_texts", text_on_window_top_edge('±0¢', 0)
+      + text_on_window_top_edge('±600¢', 180)
+      + Array.from({ length: 11 }, (_, i) => text_on_window_top_edge(`+${(i + 1) * 50}¢`, (i + 1) * 15)).join('')
+      + Array.from({ length: 11 }, (_, i) => text_on_window_top_edge(`&#x2212;${(i + 1) * 50}¢`, -(i + 1) * 15)).join('')
+    )
     + `</g>`;
 }
 
@@ -65,18 +68,18 @@ const inner_plate_svg = () => {
 
   const PLATE_ANGLE = 2.4;
 
-  return `<g id="inner" transform="rotate(${PLATE_ANGLE})"><path fill="white" fill-rule="evenodd" d="M 0,-60 A 60 60 0 0 1 0,60 A 60 60 0 0 1 0,-60 ${window}" transform="rotate(22.5)" />`
-    + FREQS_BY_10.flatMap(
+  return `<g id="inner_plate" transform="rotate(${PLATE_ANGLE})"><path fill="white" fill-rule="evenodd" d="M 0,-60 A 60 60 0 0 1 0,60 A 60 60 0 0 1 0,-60 ${window}" transform="rotate(22.5)" />`
+    + g("inner_plate_freq_notches", FREQS_BY_10.flatMap(
       (freq) => NOTCHES_FREQ.map(o => notch_on_inner_plate(o.length, freqToAngle(freq + o.delta)))
-    ).join('')
-    + FREQS_BY_10.map((freq) => text_on_inner_plate(freq, freqToAngle(freq))).join('')
-    + Array.from({ length: 12 }, (_, i) => text({
+    ).join(''))
+    + g("inner_plate_freq_texts", FREQS_BY_10.map((freq) => text_on_inner_plate(freq, freqToAngle(freq))).join(''))
+    + g("inner_plate_note_texts", Array.from({ length: 12 }, (_, i) => text({
       radius: 45, angle: i * 30, content: [
         'A', 'A♯/B♭', 'B', 'C', 'C♯/D♭', 'D',
         'D♯/E♭', 'E', 'F', 'F♯/G♭', 'G', 'G♯/A♭'
       ][i]
-    })).join('')
-    + notch_on_window_top_edge_pointing_out(2, 0)
+    })).join(''))
+    + g("indicator", notch_on_window_top_edge_pointing_out(2, 0))
     + `</g>`;
 }
 
