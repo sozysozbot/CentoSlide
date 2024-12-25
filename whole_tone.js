@@ -98,7 +98,7 @@ const inner_plate_svg = () => {
 
   const window = `M 0,-${bottom} L 0,-${top} A ${top} ${top} 0 0 0 -${top * Math.SQRT1_2},-${top * Math.SQRT1_2} L -${bottom * Math.SQRT1_2},-${bottom * Math.SQRT1_2} A ${bottom} ${bottom} 0 0 1 0,-${bottom}`;
 
-  const PLATE_ANGLE = 90;
+  const PLATE_ANGLE = 20;
 
   return `<g id="inner_plate" transform="rotate(${PLATE_ANGLE})"><path fill="white" fill-rule="evenodd" d="M 0,-60 A 60 60 0 0 1 0,60 A 60 60 0 0 1 0,-60 ${window}" transform="rotate(22.5)" />`
     + g("inner_plate_freq_notches",
