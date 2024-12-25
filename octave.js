@@ -101,7 +101,7 @@ function text({ content, angle, radius, size = 4 }) {
        id="tspan1"
        x="-0.28545514"
        y="${-radius}"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:${size}px;font-family:Garamond;-inkscape-font-specification:Garamond;text-align:center;text-anchor:middle">${content}</tspan></text>`;
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:${size}px;font-family:Garamond, 'Times New Roman', Consolas, serif;-inkscape-font-specification:Garamond, 'Times New Roman', Consolas, serif;text-align:center;text-anchor:middle">${content}</tspan></text>`;
 }
 
 function text_on_inner_plate(content, angle) {
