@@ -79,6 +79,10 @@ const inner_plate_svg = () => {
         'D♯/E♭', 'E', 'F', 'F♯/G♭', 'G', 'G♯/A♭'
       ][i]
     })).join(''))
+    + g("credit",
+      text({ content: 'CentoSlide', angle: 0, radius: 13, size: 5 }) +
+      text({ content: 'Designed by @hsjoihs', angle: 0, radius: 8, size: 3 })
+    )
     + g("indicator", notch_on_window_top_edge_pointing_out(2, 0))
     + `</g>`;
 }

@@ -113,6 +113,10 @@ const inner_plate_svg = () => {
         )
       ).join('')
     )
+    + g("credit",
+      text({ content: 'CentoSlide', angle: 0, radius: 13, size: 5 }) +
+      text({ content: 'Designed by @hsjoihs', angle: 0, radius: 8, size: 3 })
+    )
     + g("indicator", notch_on_window_top_edge_pointing_out(3.9, 0))
     + `</g>`;
 }
