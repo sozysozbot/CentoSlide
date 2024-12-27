@@ -87,8 +87,9 @@ const outer_plate_svg = () => {
       )).join(''))
     + g("outer_plate_cent_notches", Array.from({ length: 200 }).map((_, i) => notch_on_window_top_edge(getNotchCentLength(i), i * 360 * 6 / 1200)).join(''))
     + g("outer_plate_cent_texts", text_on_window_top_edge('±0¢', 0)
-      + Array.from({ length: 10 }, (_, i) => text_on_window_top_edge(`+${(i + 1) * 10}¢`, (i + 1) * 3 * 6)).join('')
-      + Array.from({ length: 10 }, (_, i) => text_on_window_top_edge(`&#x2212;${(i + 1) * 10}¢`, -(i + 1) * 3 * 6)).join('')
+      + text_on_window_top_edge('±100¢', 180)
+      + Array.from({ length: 9 }, (_, i) => text_on_window_top_edge(`+${(i + 1) * 10}¢`, (i + 1) * 3 * 6)).join('')
+      + Array.from({ length: 9 }, (_, i) => text_on_window_top_edge(`&#x2212;${(i + 1) * 10}¢`, -(i + 1) * 3 * 6)).join('')
     )
     + `</g>`;
 }
