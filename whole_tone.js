@@ -119,7 +119,7 @@ const inner_plate_svg = () => {
 
 
 
-fs.writeFileSync('whole_tone.svg', `<svg width="160mm" height="160mm" viewBox="-80 -80 160 160" version="1.1" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><defs>
+const svg_file = `<svg width="160mm" height="160mm" viewBox="-80 -80 160 160" version="1.1" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><defs>
     <radialGradient id="shinyGold" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
       <stop offset="0%" style="stop-color:#ffd700; stop-opacity:1" />
       <stop offset="100%" style="stop-color:#8d7802; stop-opacity:1" />
@@ -134,7 +134,14 @@ fs.writeFileSync('whole_tone.svg', `<svg width="160mm" height="160mm" viewBox="-
   outer_plate_svg()
   + inner_plate_svg()
   + `<circle cx="0" cy="0" r="3.3" stroke="#8d7802" stroke-width="1" fill="url(#shinyGold)" filter="url(#glossy)" id="center_eyelet" /></svg>
-`, { encoding: 'utf-8' });
+`;
+fs.writeFileSync('docs/whole_tone.svg', svg_file, { encoding: 'utf-8' });
+fs.writeFileSync('docs/whole_tone.html',
+  fs.readFileSync('template.html', { encoding: 'utf-8' })
+    .replace('{{svg_content}}', svg_file)
+    .replace('{{title}}', 'whole tone'),
+  { encoding: 'utf-8' }
+);
 
 function freqToAngle(freq) { return Math.log2(freq / 440) * 360 * 6; }
 
